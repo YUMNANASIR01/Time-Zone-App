@@ -1,5 +1,3 @@
-
-# Required Libraries
 import streamlit as st
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -28,6 +26,7 @@ body {
 </style>
 """
 st.markdown(dark_theme_css, unsafe_allow_html=True)
+
 
 # List of Time Zones with Emojis
 Time_Zones = {
@@ -143,6 +142,7 @@ st.markdown("<h1 class='text-3xl font-bold text-center text-blue-400'>🌎 Time 
 # Select Time Zones
 selected_timezone = st.multiselect("🌍 Select Timezones", list(Time_Zones.keys()), default=["UTC", "Asia/Karachi"])
 
+# Display current time for selected time zones
 st.subheader("🕰 Selected Timezones")
 for tz in selected_timezone:
     current_time = datetime.now(ZoneInfo(tz)).strftime("%Y-%m-%d %I:%M:%S %p")
@@ -150,9 +150,7 @@ for tz in selected_timezone:
 
 # Convert Time Between TimeZones
 st.subheader("🔄 Convert Time Between TimeZones")
-
 current_time = st.time_input("⏰ Current Time", value=datetime.now().time())
-
 from_tz = st.selectbox("🕰 From Timezone", list(Time_Zones.keys()), index=0)
 to_tz = st.selectbox("🌎 To Timezone", list(Time_Zones.keys()), index=1)
 
@@ -160,9 +158,6 @@ if st.button("🔄 Convert Time"):
     dt = datetime.combine(datetime.today(), current_time, tzinfo=ZoneInfo(from_tz))
     converted_time = dt.astimezone(ZoneInfo(to_tz)).strftime("%Y-%m-%d %I:%M:%S %p")
     st.success(f"✅ Converted Time in {Time_Zones[to_tz]}: {converted_time}")
-
-
-
 
 
 
